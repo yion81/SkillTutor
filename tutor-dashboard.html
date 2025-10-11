@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Dashboard - SkillSwap</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .tutor-sidebar {
+            width: 280px;
+        }
+        .active-sidebar-link {
+            background-color: #eef2ff;
+            color: #6366f1;
+        }
+        .fc .fc-daygrid-day.fc-day-today {
+            background-color: #eef2ff;
+        }
+        .fc .fc-button-primary {
+            background-color: #6366f1;
+            border-color: #6366f1;
+        }
+        .fc .fc-button-primary:hover {
+            background-color: #4f46e5;
+            border-color: #4f46e5;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="tutor-sidebar bg-white h-screen sticky top-0 shadow-sm">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center space-x-3 mb-6">
+                    <img src="http://static.photos/people/200x200/1" alt="User" class="w-10 h-10 rounded-full object-cover">
+                    <div>
+                        <h3 class="font-bold">Sarah Johnson</h3>
+                        <p class="text-sm text-gray-600">Tutor</p>
+                    </div>
+                </div>
+                <nav>
+                    <ul class="space-y-1">
+                        <li>
+                            <a href="/tutor/dashboard" class="flex items-center space-x-3 px-4 py-3 rounded-lg active-sidebar-link">
+                                <i data-feather="home" class="w-5 h-5"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/tutor/schedule" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100">
+                                <i data-feather="calendar" class="w-5 h-5"></i>
+                                <span>Schedule</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/tutor/sessions" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100">
+                                <i data-feather="users" class="w-5 h-5"></i>
+                                <span>Sessions</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/tutor/messages" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100">
+                                <i data-feather="message-square" class="w-5 h-5"></i>
+                                <span>Messages</span>
+                                <span class="ml-auto bg-indigo-600 text-white text-xs px-2 py-1 rounded-full">5</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/tutor/earnings" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100">
+                                <i data-feather="dollar-sign" class="w-5 h-5"></i>
+                                <span>Earnings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/tutor/profile" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100">
+                                <i data-feather="user" class="w-5 h-5"></i>
+                                <span>Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/tutor/settings" class="flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-100">
+                                <i data-feather="settings" class="w-5 h-5"></i>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="p-6">
+                <button onclick="window.location.href='/profile/edit'" class="w-full flex items-center justify-center space-x-2 bg-indigo-600 text-white px-4 py-3 rounded-lg hover:bg-indigo-700 transition">
+                    <i data-feather="edit" class="w-5 h-5"></i>
+                    <span>Edit Profile</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-2xl font-bold text-gray-800">Tutor Dashboard</h1>
+                <div class="bg-indigo-50 text-indigo-600 px-4 py-2 rounded-lg text-sm font-medium">
+                    <i data-feather="shield" class="w-4 h-4 inline mr-1"></i>
+                    <span>Verified Tutor</span>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600">Upcoming Sessions</p>
+                            <h3 class="text-2xl font-bold text-gray-800 mt-1">7</h3>
+                        </div>
+                        <div class="bg-indigo-100 text-indigo-600 p-3 rounded-lg">
+                            <i data-feather="calendar" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <a href="/tutor/schedule" class="text-indigo-600 text-sm font-medium inline-flex items-center mt-4 hover:underline">
+                        View schedule <i data-feather="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600">Pending Requests</p>
+                            <h3 class="text-2xl font-bold text-gray-800 mt-1">3</h3>
+                        </div>
+                        <div class="bg-yellow-100 text-yellow-600 p-3 rounded-lg">
+                            <i data-feather="clock" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <a href="/tutor/sessions?tab=pending" class="text-indigo-600 text-sm font-medium inline-flex items-center mt-4 hover:underline">
+                        View requests <i data-feather="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600">Completed Sessions</p>
+                            <h3 class="text-2xl font-bold text-gray-800 mt-1">42</h3>
+                        </div>
+                        <div class="bg-green-100 text-green-600 p-3 rounded-lg">
+                            <i data-feather="check-circle" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <a href="/tutor/sessions?tab=completed" class="text-indigo-600 text-sm font-medium inline-flex items-center mt-4 hover:underline">
+                        View history <i data-feather="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600">Earnings</p>
+                            <h3 class="text-2xl font-bold text-gray-800 mt-1">Rp6,250,000</h3>
+                        </div>
+                        <div class="bg-blue-100 text-blue-600 p-3 rounded-lg">
+                            <i data-feather="dollar-sign" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <a href="/tutor/earnings" class="text-indigo-600 text-sm font-medium inline-flex items-center mt-4 hover:underline">
+                        View earnings <i data-feather="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Calendar -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+                <h2 class="text-xl font-bold text-gray-800 mb-6">Your Schedule</h2>
+                <div id="calendar"></div>
+            </div>
+
+            <!-- Recent Sessions & Earnings -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Recent Sessions -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">Recent Sessions</h2>
+                        <a href="/tutor/sessions" class="text-indigo-600 text-sm font-medium hover:underline">View all</a>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <!-- Session 1 -->
+                        <div class="flex items-start p-4 border border-gray-200 rounded-lg hover:shadow-md transition">
+                            <img src="http://static.photos/people/200x200/8" alt="Student" class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-start">
+                                    <h3 class="font-bold">Robert Taylor</h3>
+                                    <div class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">
+                                        Completed
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-1">React Fundamentals</p>
+                                <p class="text-gray-500 text-xs">Jun 10, 2023 • 10:00 AM - 11:00 AM</p>
+                            </div>
+                        </div>
+
+                        <!-- Session 2 -->
+                        <div class="flex items-start p-4 border border-gray-200 rounded-lg hover:shadow-md transition">
+                            <img src="http://static.photos/people/200x200/9" alt="Student" class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-start">
+                                    <h3 class="font-bold">Lisa Wong</h3>
+                                    <div class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
+                                        Upcoming
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-1">Advanced Node.js</p>
+                                <p class="text-gray-500 text-xs">Jun 12, 2023 • 10:00 AM - 11:00 AM</p>
+                            </div>
+                        </div>
+
+                        <!-- Session 3 -->
+                        <div class="flex items-start p-4 border border-gray-200 rounded-lg hover:shadow-md transition">
+                            <img src="http://static.photos/people/200x200/10" alt="Student" class="w-12 h-12 rounded-full object-cover mr-4">
+                            <div class="flex-grow">
+                                <div class="flex justify-between items-start">
+                                    <h3 class="font-bold">Andi Pratama</h3>
+                                    <div class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">
+                                        Pending
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 text-sm mb-1">JavaScript Basics</p>
+                                <p class="text-gray-500 text-xs">Jun 13, 2023 • 2:00 PM - 3:00 PM</p>
+                                <div class="flex space-x-2 mt-2">
+                                    <button class="text-xs px-3 py-1 bg-green-100 text-green-800 rounded-full hover:bg-green-200">Accept</button>
+                                    <button class="text-xs px-3 py-1 bg-red-100 text-red-800 rounded-full hover:bg-red-200">Decline</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <h2 class="text-xl font-bold text-gray-800 mb-6">Earnings Overview</h2>
+                    <div class="mb-6">
+                        <canvas id="earningsChart" height="200"></canvas>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                            <div>
+                                <p class="text-gray-600">Available Balance</p>
+                                <h3 class="text-2xl font-bold text-gray-800">Rp3,750,000</h3>
+                            </div>
+                            <button onclick="window.location.href='/tutor/withdraw'" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700 transition">Withdraw</button>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <p class="text-gray-600 text-sm">This Month</p>
+                                <p class="font-bold text-gray-800">Rp1,250,000</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <p class="text-gray-600 text-sm">Last Month</p>
+                                <p class="font-bold text-gray-800">Rp1,500,000</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="text-gray-600 text-sm">Next Payout</p>
+                            <p class="font-bold text-gray-800">Jun 15, 2023</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews & Ratings -->
+            <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-gray-800">Reviews & Ratings</h2>
+                    <a href="/tutor/reviews" class="text-indigo-600 text-sm font-medium hover:underline">View all</a>
+                </div>
+                
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+                    <div class="flex items-center mb-4 md:mb-0">
+                        <div class="text-center mr-6">
+                            <div class="text-5xl font-bold text-gray-800">4.9</div>
+                            <div class="flex justify-center mt-1">
+                                <i data-feather="star" class="w-5 h-5 fill-current text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 fill-current text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 fill-current text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 fill-current text-yellow-400"></i>
+                                <i data-feather="star" class="w-5 h-5 fill-current text-yellow-400"></i>
+                            </div>
+                        </div>
+                        <div class="w-48">
+                            <div class="flex items-center mb-1">
+                                <span class="text-sm text-gray-600 w-8">5★</span>
+                                <div class="flex-grow bg-gray-200 rounded-full h-2 mx-2">
+                                    <div class="bg-yellow-400 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                                <span class="text-sm text-gray-600 w-8">85%</span>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <span class="text-sm text-gray-600 w-8">4★</span>
+                                <div class="flex-grow bg-gray-200 rounded-full h-2 mx-2">
+                                    <div class="bg-yellow-400 h-2 rounded-full" style="width: 12%"></div>
+                                </div>
+                                <span class="text-sm text-gray-600 w-8">12%</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-sm text-gray-600 w-8">3★</span>
+                                <div class="flex-grow bg-gray-200 rounded-full h-2 mx-2">
+                                    <div class="bg-yellow-400 h-2 rounded-full" style="width: 3%"></div>
+                                </div>
+                                <span class="text-sm text-gray-600 w-8">3%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="window.location.href='/tutor/profile#reviews'" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition flex items-center">
+                            <i data-feather="star" class="w-4 h-4 mr-2"></i>
+                            <span>View Public Reviews</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Review 1 -->
+                    <div class="border-b border-gray-100 pb-4">
+                        <div class="flex items-center mb-2">
+                            <img src="http://static.photos/people/200x200/8" alt="Student" class="w-8 h-8 rounded-full object-cover mr-3">
+                            <div>
+                                <h3 class="font-bold">Robert Taylor</h3>
+                                <div class="flex items-center">
+                                    <div class="flex text-yellow-400 mr-2">
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    </div>
+                                    <span class="text-gray-500 text-sm">Jun 10, 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700">"Sarah is an excellent tutor! She explained complex React concepts in a way that was easy to understand. I'll definitely book more sessions."</p>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div class="pb-4">
+                        <div class="flex items-center mb-2">
+                            <img src="http://static.photos/people/200x200/11" alt="Student" class="w-8 h-8 rounded-full object-cover mr-3">
+                            <div>
+                                <h3 class="font-bold">Emily Chen</h3>
+                                <div class="flex items-center">
+                                    <div class="flex text-yellow-400 mr-2">
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4"></i>
+                                    </div>
+                                    <span class="text-gray-500 text-sm">Jun 5, 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700">"Great session overall. We covered a lot of material in one hour. Would have given 5 stars if we had more time for questions at the end."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Initialize Calendar
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek'
+                },
+                events: [
+                    {
+                        title: 'Session with Robert',
+                        start: '2023-06-10T10:00:00',
+                        end: '2023-06-10T11:00:00',
+                        color: '#6366f1'
+                    },
+                    {
+                        title: 'Session with Lisa',
+                        start: '2023-06-12T10:00:00',
+                        end: '2023-06-12T11:00:00',
+                        color: '#6366f1'
+                    },
+                    {
+                        title: 'Pending: Andi',
+                        start: '2023-06-13T14:00:00',
+                        end: '2023-06-13T15:00:00',
+                        color: '#f59e0b'
+                    },
+                    {
+                        title: 'Session with David',
+                        start: '2023-06-15T16:00:00',
+                        end: '2023-06-15T17:00:00',
+                        color: '#6366f1'
+                    }
+                ]
+            });
+            calendar.render();
+        });
+
+        // Initialize Earnings Chart
+        const earningsCtx = document.getElementById('earningsChart').getContext('2d');
+        const earningsChart = new Chart(earningsCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Earnings (Rp)',
+                    data: [1200000, 1500000, 1100000, 1800000, 1400000, 1250000],
+                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    borderColor: '#6366f1',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return 'Rp' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Session Actions
+        document.querySelectorAll('.bg-green-100').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Accept session
+                const sessionCard = this.closest('.flex.items-start');
+                sessionCard.querySelector('.bg-yellow-100').classList.replace('bg-yellow-100', 'bg-blue-100');
+                sessionCard.querySelector('.text-yellow-800').classList.replace('text-yellow-800', 'text-blue-800');
+                sessionCard.querySelector('.text-yellow-800').textContent = 'Upcoming';
+                this.closest('.flex.space-x-2').remove();
+                alert('Session accepted successfully');
+            });
+        });
+
+        document.querySelectorAll('.bg-red-100').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Decline session
+                if (confirm('Are you sure you want to decline this session?')) {
+                    const sessionCard = this.closest('.flex.items-start');
+                    sessionCard.style.opacity = '0.5';
+                    this.disabled = true;
+                    this.textContent = 'Declining...';
+                    
+                    // Simulate API call
+                    setTimeout(() => {
+                        sessionCard.remove();
+                        alert('Session declined successfully');
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

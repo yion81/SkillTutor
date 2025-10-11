@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Successful - SkillSwap</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #4caf50;
+            position: relative;
+        }
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            left: 26px;
+            top: 12px;
+            width: 20px;
+            height: 40px;
+            border: solid white;
+            border-width: 0 6px 6px 0;
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gray-50">
+    <div class="bg-white rounded-xl shadow-md p-8 max-w-md w-full text-center">
+        <div class="flex justify-center mb-6">
+            <div class="checkmark"></div>
+        </div>
+        
+        <h1 class="text-3xl font-bold text-gray-800 mb-3">Booking Confirmed!</h1>
+        <p class="text-gray-600 mb-6">Your session with Sarah Johnson has been successfully booked.</p>
+
+        <div class="border border-gray-200 rounded-lg p-4 mb-6 text-left">
+            <h2 class="font-bold text-gray-800 mb-3">Session Details</h2>
+            <div class="space-y-2">
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Date</span>
+                    <span class="font-medium">Monday, June 12, 2023</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Time</span>
+                    <span class="font-medium">10:00 AM - 11:00 AM (WIB)</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">Format</span>
+                    <span class="font-medium">Video Call</span>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-gray-600 mb-6">A confirmation email with session details has been sent to your email address.</p>
+
+        <div class="space-y-3">
+            <a href="dashboard.html" class="block w-full py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium">
+                View in Dashboard
+            </a>
+            <a href="discover.html" class="block w-full py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium">
+                Find More Tutors
+            </a>
+        </div>
+
+        <div class="mt-6 pt-6 border-t border-gray-200">
+            <h3 class="font-bold text-gray-800 mb-2">Need Help?</h3>
+            <p class="text-gray-600 text-sm">Contact us at <a href="mailto:support@skillswap.com" class="text-indigo-600">support@skillswap.com</a> or call +62 123 4567 890</p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+    </script>
+</body>
+</html>

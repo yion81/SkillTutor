@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah Johnson - Web Development Expert | SkillSwap</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .sticky-booking {
+            position: sticky;
+            top: 1rem;
+        }
+        .availability-highlight {
+            background-color: #e0e7ff;
+            color: #4338ca;
+            border-color: #4338ca;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm py-4 sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="/" class="flex items-center space-x-2">
+                <i data-feather="layers" class="text-indigo-600 w-8 h-8"></i>
+                <span class="text-2xl font-bold text-indigo-600">SkillSwap</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="/discover" class="text-gray-700 hover:text-indigo-600 font-medium">Discover</a>
+                <a href="/become-tutor" class="text-gray-700 hover:text-indigo-600 font-medium">Become a Tutor</a>
+                <a href="/how-it-works" class="text-gray-700 hover:text-indigo-600 font-medium">How it Works</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="window.location.href='/login'" class="px-4 py-2 text-indigo-600 font-medium hover:bg-indigo-50 rounded-lg transition">Log In</button>
+                <button onclick="window.location.href='/signup'" class="px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition shadow-md">Sign Up</button>
+            </div>
+            <button class="md:hidden text-gray-700">
+                <i data-feather="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Tutor Profile Content -->
+            <div class="w-full lg:w-2/3">
+                <!-- Header Section -->
+                <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="flex-shrink-0">
+                            <img src="http://static.photos/people/200x200/1" alt="Sarah Johnson" class="w-32 h-32 rounded-full object-cover">
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h1 class="text-3xl font-bold text-gray-800">Sarah Johnson</h1>
+                                    <p class="text-lg text-gray-600 mb-2">Web Development Expert</p>
+                                    <div class="flex items-center space-x-2 mb-4">
+                                        <div class="flex items-center text-yellow-400">
+                                            <i data-feather="star" class="w-5 h-5 fill-current"></i>
+                                            <i data-feather="star" class="w-5 h-5 fill-current"></i>
+                                            <i data-feather="star" class="w-5 h-5 fill-current"></i>
+                                            <i data-feather="star" class="w-5 h-5 fill-current"></i>
+                                            <i data-feather="star" class="w-5 h-5 fill-current"></i>
+                                        </div>
+                                        <span class="text-gray-600">4.9 (128 reviews)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                                    <span>Available Now</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">JavaScript</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">React</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">Node.js</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">HTML/CSS</span>
+                            </div>
+                            <div class="flex space-x-4">
+                                <button id="messageBtn" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition flex items-center">
+                                    <i data-feather="message-square" class="w-4 h-4 mr-2"></i>
+                                    <span>Message</span>
+                                </button>
+                                <button class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition flex items-center">
+                                    <i data-feather="heart" class="w-4 h-4 mr-2"></i>
+                                    <span>Save</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Section -->
+                <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">About Me</h2>
+                    <div class="prose max-w-none text-gray-700">
+                        <p>Hello! I'm Sarah, a full-stack web developer with over 7 years of professional experience building web applications. I specialize in JavaScript frameworks like React and Node.js, and I love helping others learn these powerful tools.</p>
+                        <p class="mt-3">I've worked with startups and Fortune 500 companies, so I can teach you both the technical skills and the industry best practices you need to succeed as a developer. Whether you're just starting out or looking to level up your skills, I can create a personalized learning plan for you.</p>
+                        <p class="mt-3">My teaching approach is hands-on and project-based. You'll learn by building real applications that you can add to your portfolio. I'm patient, encouraging, and committed to your success!</p>
+                    </div>
+                </div>
+
+                <!-- Experience & Qualifications -->
+                <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Experience & Qualifications</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="font-bold text-lg text-gray-800">Senior Web Developer</h3>
+                            <p class="text-gray-600">TechSolutions Inc. • 2018 - Present</p>
+                            <ul class="list-disc pl-5 mt-2 text-gray-700 space-y-1">
+                                <li>Lead developer for company's flagship SaaS product</li>
+                                <li>Mentored junior developers and conducted code reviews</li>
+                                <li>Implemented CI/CD pipelines reducing deployment time by 40%</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-gray-800">Education</h3>
+                            <p class="text-gray-700">B.S. Computer Science - Stanford University</p>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-gray-800">Certifications</h3>
+                            <ul class="list-disc pl-5 mt-2 text-gray-700 space-y-1">
+                                <li>Google Professional Cloud Developer</li>
+                                <li>AWS Certified Developer - Associate</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Section -->
+                <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Portfolio</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <img src="http://static.photos/technology/640x360/1" alt="Project 1" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-gray-800">E-commerce Platform</h3>
+                                <p class="text-gray-600 text-sm mt-1">Built with React, Node.js, and MongoDB</p>
+                            </div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <img src="http://static.photos/technology/640x360/2" alt="Project 2" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-bold text-gray-800">Task Management App</h3>
+                                <p class="text-gray-600 text-sm mt-1">Built with Vue.js and Firebase</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews Section -->
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800">Reviews</h2>
+                        <div class="flex items-center space-x-2">
+                            <select id="reviewSort" class="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm">
+                                <option value="newest">Newest First</option>
+                                <option value="highest">Highest Rating</option>
+                                <option value="lowest">Lowest Rating</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6" id="reviewsContainer">
+                        <!-- Review 1 -->
+                        <div class="border-b border-gray-100 pb-6">
+                            <div class="flex items-center mb-4">
+                                <img src="http://static.photos/people/200x200/2" alt="Reviewer" class="w-10 h-10 rounded-full object-cover mr-4">
+                                <div>
+                                    <h4 class="font-bold">Michael Chen</h4>
+                                    <div class="flex items-center text-yellow-400">
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700">"Sarah is an amazing teacher! She broke down complex React concepts into easy-to-understand lessons. After just 5 sessions, I was able to build my first full-stack application. Highly recommend!"</p>
+                            <p class="text-gray-500 text-sm mt-2">2 weeks ago • 5 sessions completed</p>
+                        </div>
+
+                        <!-- Review 2 -->
+                        <div class="border-b border-gray-100 pb-6">
+                            <div class="flex items-center mb-4">
+                                <img src="http://static.photos/people/200x200/3" alt="Reviewer" class="w-10 h-10 rounded-full object-cover mr-4">
+                                <div>
+                                    <h4 class="font-bold">Jessica Williams</h4>
+                                    <div class="flex items-center text-yellow-400">
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700">"I was struggling with JavaScript concepts before working with Sarah. She's patient, knowledgeable, and great at explaining things in different ways until they click. I've improved so much!"</p>
+                            <p class="text-gray-500 text-sm mt-2">1 month ago • 8 sessions completed</p>
+                        </div>
+
+                        <!-- Review 3 -->
+                        <div class="pb-6">
+                            <div class="flex items-center mb-4">
+                                <img src="http://static.photos/people/200x200/4" alt="Reviewer" class="w-10 h-10 rounded-full object-cover mr-4">
+                                <div>
+                                    <h4 class="font-bold">David Kim</h4>
+                                    <div class="flex items-center text-yellow-400">
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                        <i data-feather="star" class="w-4 h-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-700">"Great tutor overall. The only reason I'm not giving 5 stars is that sometimes our sessions ran a few minutes over but I was still charged for the full hour. But the teaching itself was excellent."</p>
+                            <p class="text-gray-500 text-sm mt-2">2 months ago • 3 sessions completed</p>
+                        </div>
+                    </div>
+
+                    <button class="w-full py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition mt-4">Load More Reviews</button>
+                </div>
+            </div>
+
+            <!-- Booking Sidebar -->
+            <div class="w-full lg:w-1/3">
+                <div class="sticky-booking">
+                    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Book a Session</h2>
+                        
+                        <!-- Session Packages -->
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Select a package</label>
+                            <div class="space-y-2">
+                                <div class="session-option border border-gray-300 rounded-lg p-4 hover:border-indigo-400 cursor-pointer">
+                                    <div class="flex justify-between">
+                                        <div>
+                                            <h3 class="font-bold">1-hour Session</h3>
+                                            <p class="text-gray-600 text-sm">Perfect for quick questions</p>
+                                        </div>
+                                        <span class="font-bold text-indigo-600">Rp150,000</span>
+                                    </div>
+                                </div>
+                                <div class="session-option border border-indigo-400 rounded-lg p-4 bg-indigo-50 cursor-pointer">
+                                    <div class="flex justify-between">
+                                        <div>
+                                            <h3 class="font-bold">4-hour Package</h3>
+                                            <p class="text-gray-600 text-sm">Save 15% (Rp37,500/hour)</p>
+                                        </div>
+                                        <span class="font-bold text-indigo-600">Rp150,000</span>
+                                    </div>
+                                </div>
+                                <div class="session-option border border-gray-300 rounded-lg p-4 hover:border-indigo-400 cursor-pointer">
+                                    <div class="flex justify-between">
+                                        <div>
+                                            <h3 class="font-bold">8-hour Package</h3>
+                                            <p class="text-gray-600 text-sm">Save 20% (Rp37,500/hour)</p>
+                                        </div>
+                                        <span class="font-bold text-indigo-600">Rp150,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Calendar -->
+                        <div class="mb-6">
+                            <label class="block text-gray-700 mb-2">Select date & time</label>
+                            <input type="text" id="bookingDate" placeholder="Select date" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 mb-2">
+                            
+                            <div id="timeSlots" class="grid grid-cols-2 gap-2 hidden">
+                                <button class="time-slot py-2 border border-gray-300 rounded-lg hover:bg-gray-50">09:00 AM</button>
+                                <button class="time-slot py-2 border border-gray-300 rounded-lg hover:bg-gray-50">10:00 AM</button>
+                                <button class="time-slot py-2 border border-gray-300 rounded-lg hover:bg-gray-50">11:00 AM</button>
+                                <button class="time-slot py-2 border border-gray-300 rounded-lg hover:bg-gray-50">01:00 PM</button>
+                                <button class="time-slot py-2 border border-gray-300 rounded-lg hover:bg-gray-50">02:00 PM</button>
+                                <button class="time-slot py-2 border border-gray-300 rounded-lg hover:bg-gray-50">03:00 PM</button>
+                            </div>
+                        </div>
+
+                        <!-- Booking Summary -->
+                        <div class="border-t border-gray-200 pt-4 mb-6">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">1-hour Session</span>
+                                <span class="font-medium">Rp150,000</span>
+                            </div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-600">Platform Fee</span>
+                                <span class="font-medium">Rp15,000</span>
+                            </div>
+                            <div class="flex justify-between font-bold text-lg mt-4">
+                                <span>Total</span>
+                                <span>Rp165,000</span>
+                            </div>
+                        </div>
+
+                        <button id="bookNowBtn" class="w-full py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-medium">Book Now</button>
+                    </div>
+
+                    <!-- Additional Info -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Session Details</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <h3 class="font-medium text-gray-700">Cancellation Policy</h3>
+                                <p class="text-gray-600 text-sm">Free cancellation up to 24 hours before session</p>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-700">Session Format</h3>
+                                <p class="text-gray-600 text-sm">Video call or in-person (Jakarta area)</p>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-700">Languages</h3>
+                                <p class="text-gray-600 text-sm">English, Indonesian</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i data-feather="layers" class="text-indigo-400 w-8 h-8"></i>
+                        <span class="text-2xl font-bold text-indigo-400">SkillSwap</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">The peer-to-peer platform for skill sharing and personalized learning.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://facebook.com" class="text-gray-400 hover:text-white transition">
+                            <i data-feather="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://twitter.com" class="text-gray-400 hover:text-white transition">
+                            <i data-feather="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://instagram.com" class="text-gray-400 hover:text-white transition">
+                            <i data-feather="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://linkedin.com" class="text-gray-400 hover:text-white transition">
+                            <i data-feather="linkedin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">For Learners</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/discover" class="text-gray-400 hover:text-white transition">Browse Tutors</a></li>
+                        <li><a href="/categories" class="text-gray-400 hover:text-white transition">Popular Skills</a></li>
+                        <li><a href="/pricing" class="text-gray-400 hover:text-white transition">Pricing</a></li>
+                        <li><a href="/testimonials" class="text-gray-400 hover:text-white transition">Student Stories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">For Tutors</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/become-tutor" class="text-gray-400 hover:text-white transition">Become a Tutor</a></li>
+                        <li><a href="/tutor-resources" class="text-gray-400 hover:text-white transition">Tutor Resources</a></li>
+                        <li><a href="/teaching-tips" class="text-gray-400 hover:text-white transition">Teaching Tips</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/about" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="/careers" class="text-gray-400 hover:text-white transition">Careers</a></li>
+                        <li><a href="/contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2023 SkillSwap. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="/terms" class="text-gray-400 hover:text-white transition">Terms</a>
+                    <a href="/privacy" class="text-gray-400 hover:text-white transition">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Initialize Calendar
+        const calendar = flatpickr("#bookingDate", {
+            inline: true,
+            minDate: "today",
+            disable: [
+                function(date) {
+                    // Disable weekends
+                    return (date.getDay() === 0 || date.getDay() === 6);
+                }
+            ],
+            onChange: function(selectedDates, dateStr, instance) {
+                // Show time slots when date is selected
+                document.getElementById('timeSlots').classList.remove('hidden');
+            }
+        });
+
+        // Session Package Selection
+        document.querySelectorAll('.session-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.session-option').forEach(opt => {
+                    opt.classList.remove('border-indigo-400', 'bg-indigo-50');
+                    opt.classList.add('border-gray-300');
+                });
+                this.classList.remove('border-gray-300');
+                this.classList.add('border-indigo-400', 'bg-indigo-50');
+            });
+        });
+
+        // Time Slot Selection
+        document.querySelectorAll('.time-slot').forEach(slot => {
+            slot.addEventListener('click', function() {
+                document.querySelectorAll('.time-slot').forEach(s => {
+                    s.classList.remove('bg-indigo-100', 'border-indigo-400');
+                });
+                this.classList.add('bg-indigo-100', 'border-indigo-400');
+            });
+        });
+
+        // Book Now Button
+        document.getElementById('bookNowBtn').addEventListener('click', function() {
+            const selectedPackage = document.querySelector('.session-option.border-indigo-400');
+            const selectedTime = document.querySelector('.time-slot.bg-indigo-100');
+            
+            if (!selectedPackage) {
+                alert('Please select a session package');
+                return;
+            }
+            
+            if (!calendar.selectedDates.length) {
+                alert('Please select a date');
+                return;
+            }
+            
+            if (!selectedTime) {
+                alert('Please select a time slot');
+                return;
+            }
+            
+            // Proceed to booking confirmation
+            window.location.href = 'booking-confirm.html';
+        });
+
+        // Message Button
+        document.getElementById('messageBtn').addEventListener('click', function() {
+            alert('Please login to send a message');
+            window.location.href = '/login?redirect=' + encodeURIComponent(window.location.pathname);
+        });
+
+        // Review Sorting
+        document.getElementById('reviewSort').addEventListener('change', function() {
+            // In a real app, this would fetch sorted reviews from the server
+            alert('Reviews sorted by ' + this.value);
+        });
+    </script>
+</body>
+</html>
