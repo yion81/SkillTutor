@@ -7,8 +7,6 @@
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         body {
@@ -18,10 +16,6 @@
         .auth-container {
             max-width: 28rem;
             margin: 0 auto;
-        }
-        .role-btn.active {
-            border-color: #6366f1;
-            color: #6366f1;
         }
     </style>
 </head>
@@ -37,7 +31,7 @@
         <h1 class="text-2xl font-bold text-center mb-6">Create an account</h1>
         
         <button id="googleSignupBtn" class="w-full flex items-center justify-center space-x-2 bg-white border border-gray-300 rounded-lg px-4 py-3 mb-4 hover:bg-gray-50 transition">
-            <i data-feather="google" class="text-red-500 w-5 h-5"></i>
+            <svg class="w-5 h-5" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.42-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path><path fill="none" d="M0 0h48v48H0z"></path></svg>
             <span>Continue with Google</span>
         </button>
 
@@ -67,10 +61,10 @@
             </div>
             <div class="mb-4">
                 <label for="password" class="block text-gray-700 mb-2">Password</label>
-                <input type="password" id="password" required minlength="6" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                <input type="password" id="password" required minlength="8" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
                 <div id="passwordStrength" class="text-xs mt-1">
                     <span class="text-gray-500">Password strength: </span>
-                    <span id="strengthText" class="font-medium">Weak</span>
+                    <span id="strengthText" class="font-medium"></span>
                 </div>
             </div>
             <div class="mb-6">
@@ -89,17 +83,6 @@
     </div>
 
     <script>
-        // Initialize Firebase
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-        firebase.initializeApp(firebaseConfig);
-
         // Initialize Feather Icons
         feather.replace();
 
@@ -114,6 +97,21 @@
         const confirmPasswordInput = document.getElementById('confirmPassword');
         const strengthText = document.getElementById('strengthText');
         const passwordMatch = document.getElementById('passwordMatch');
+
+        // Helper functions
+        const showError = (message) => {
+            errorMessage.textContent = message;
+            errorMessage.classList.remove('hidden');
+        };
+
+        const clearMessages = () => {
+            errorMessage.classList.add('hidden');
+        }
+
+        const validateEmail = (email) => {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        };
 
         // Role selection
         studentBtn.addEventListener('click', () => {
@@ -135,18 +133,23 @@
         // Password strength checker
         passwordInput.addEventListener('input', () => {
             const password = passwordInput.value;
-            let strength = 0;
+            let strength = -1;
             
+            if (password.length > 0) strength = 0;
             if (password.length >= 8) strength++;
             if (password.match(/[A-Z]/)) strength++;
             if (password.match(/[0-9]/)) strength++;
             if (password.match(/[^A-Za-z0-9]/)) strength++;
             
-            const strengthLabels = ['Weak', 'Fair', 'Good', 'Strong'];
-            const colors = ['text-red-500', 'text-yellow-500', 'text-blue-500', 'text-green-500'];
+            const strengthLabels = ['Weak', 'Fair', 'Good', 'Strong', 'Very Strong'];
+            const colors = ['text-red-500', 'text-yellow-500', 'text-blue-500', 'text-green-500', 'text-green-600'];
             
-            strengthText.textContent = strengthLabels[strength];
-            strengthText.className = 'font-medium ' + colors[strength];
+            if(strength >= 0) {
+                strengthText.textContent = strengthLabels[strength];
+                strengthText.className = 'font-medium ' + colors[strength];
+            } else {
+                strengthText.textContent = '';
+            }
         });
 
         // Password confirmation check
@@ -158,61 +161,48 @@
             }
         });
 
-        // Google Sign Up
+        // Google Sign Up (Placeholder)
         googleSignupBtn.addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            firebase.auth().signInWithPopup(provider)
-                .then((result) => {
-                    // Save user role to database based on selection
-                    const isTutor = tutorBtn.classList.contains('border-indigo-600');
-                    // Redirect based on role
-                    window.location.href = isTutor ? '/tutor/dashboard' : '/dashboard';
-                })
-                .catch((error) => {
-                    errorMessage.textContent = error.message;
-                    errorMessage.classList.remove('hidden');
-                });
+            clearMessages();
+            const isTutor = tutorBtn.classList.contains('border-indigo-600');
+            // Simulate successful sign-up and redirect based on role
+            window.location.href = isTutor ? 'tutor-dashboard.html' : 'dashboard.html';
         });
 
-        // Email/Password Sign Up
+        // Email/Password Sign Up (Placeholder)
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
-            // Check if passwords match
-            if (passwordInput.value !== confirmPasswordInput.value) {
-                errorMessage.textContent = 'Passwords do not match';
-                errorMessage.classList.remove('hidden');
-                return;
-            }
-            
+            clearMessages();
+
+            const fullName = document.getElementById('fullName').value.trim();
             const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const fullName = document.getElementById('fullName').value;
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
             const isTutor = tutorBtn.classList.contains('border-indigo-600');
 
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Save additional user info
-                    return userCredential.user.updateProfile({
-                        displayName: fullName
-                    }).then(() => {
-                        // Save user role to database
-                        return firebase.firestore().collection('users').doc(userCredential.user.uid).set({
-                            role: isTutor ? 'tutor' : 'student',
-                            name: fullName,
-                            email: email,
-                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                        });
-                    });
-                })
-                .then(() => {
-                    // Redirect based on role
-                    window.location.href = isTutor ? '/tutor/dashboard' : '/dashboard';
-                })
-                .catch((error) => {
-                    errorMessage.textContent = error.message;
-                    errorMessage.classList.remove('hidden');
-                });
+            // --- Placeholder Validation ---
+            if (!fullName) {
+                showError('Please enter your full name.');
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                showError('Please enter a valid email address.');
+                return;
+            }
+
+            if (password.length < 8) {
+                showError('Password must be at least 8 characters long.');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showError('Passwords do not match.');
+                return;
+            }
+
+            // If validation passes, simulate success and redirect
+            window.location.href = isTutor ? 'tutor-dashboard.html' : 'dashboard.html';
         });
     </script>
 </body>
